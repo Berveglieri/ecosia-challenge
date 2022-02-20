@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecosia-webapp
+  namespace: ecosia-webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ecosia-webapp
+  template:
+    metadata:
+      labels:
+        app: ecosia-webapp
+    spec:
+      containers:
+        - name: ecosia-webapp
+          image: berveglieri/ecosia-webapp-challenge
+          imagePullPolicy: Always
+          ports:
+            - name: main-port
+              containerPort: 9000
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "100M"
+            limits:
+              cpu: "140m"
+              memory: "140M"
+          env:
+            - name: ENVIRONMENT
+              value: "production"
+            - name: "IDLETIMEOUT"
+              value: "30s"
+            - name: "READIMEOUT"
+              value: "2s"
+            - name: "WRITETIMEOUT"
+              value: "1s"
+
